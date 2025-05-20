@@ -1,0 +1,35 @@
+{
+  "name": "etl-coding-assignment",
+  "version": "1.0.0",
+  "description": "## The task",
+  "main": "index.ts",
+  "scripts": {
+    "start": "bun src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.48",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelsvitek/etl-coding-assignment.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pavelsvitek/etl-coding-assignment/issues"
+  },
+  "homepage": "https://github.com/pavelsvitek/etl-coding-assignment#readme",
+  "dependencies": {
+    "commander": "^14.0.0",
+    "csv-parse": "^5.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
