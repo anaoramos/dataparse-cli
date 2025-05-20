@@ -1,4 +1,4 @@
-import {parsePRN} from '../src/parser/prnParser';
+import {parsePRN} from '../src/parsers/prnParser';
 
 describe('parsePRN', () => {
     it('parses a real PRN line from the file (Anderson, Paul)', () => {

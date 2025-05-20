@@ -1,5 +1,6 @@
 import {parse} from 'csv-parse/sync';
 import {Record} from '../types/Record';
+import {normalizeBirthday, normalizeCreditLimit} from "../utils/normalize";
 
 export function parseCSV(input: string): Record[] {
     if (!input.trim()) return [];
@@ -15,7 +16,7 @@ export function parseCSV(input: string): Record[] {
         address: row?.Address || '',
         postcode: row?.Postcode || '',
         phone: row?.Phone || '',
-        creditLimit: row?.['Credit Limit'] || '',
-        birthday: row?.Birthday || '',
+        creditLimit: normalizeCreditLimit(row?.['Credit Limit']) || '',
+        birthday: normalizeBirthday(row?.Birthday) || '',
     }));
 }

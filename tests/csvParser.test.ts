@@ -1,7 +1,7 @@
-import {parseCSV} from '../src/parser/csvParser';
+import {parseCSV} from '../src/parsers/csvParser';
 
 describe('parseCSV', () => {
-    it('parses a real example from Workbook2.csv (Anderson, Paul)', () => {
+    it('parses a real example from test.csv (Anderson, Paul)', () => {
         const csv = `Name,Address,Postcode,Phone,Credit Limit,Birthday
 "Anderson, Paul",Dorpsplein 3A,4532 AA,030 3458986,109093,03/12/1965`;
 
