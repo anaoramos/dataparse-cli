@@ -1,16 +1,15 @@
-import {execSync} from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import {run} from './utils/run';
 
 const fixturesDir = path.resolve(__dirname, 'fixtures');
-const cliCommand = `npx ts-node src/index.ts`;
 
 
 describe('Evaluation-style E2E diff tests', () => {
-    const csv = path.join(fixturesDir, 'test.csv.txt');
-    const prn = path.join(fixturesDir, 'test.prn.txt');
+    const csv = path.join(fixturesDir, 'test.csv');
+    const prn = path.join(fixturesDir, 'test.prn');
 
-    afterAll(() => {
+    afterEach(() => {
         Object.values(outputs).forEach(file => {
             if (fs.existsSync(file)) fs.unlinkSync(file);
         });
@@ -24,8 +23,8 @@ describe('Evaluation-style E2E diff tests', () => {
     };
 
     it('produces identical HTML output from CSV and PRN', () => {
-        fs.writeFileSync(outputs.csvHtml, execSync(`cat ${csv} | ${cliCommand} csv html`, {encoding: 'utf-8'}));
-        fs.writeFileSync(outputs.prnHtml, execSync(`cat ${prn} | ${cliCommand} prn html`, {encoding: 'utf-8'}));
+        fs.writeFileSync(outputs.csvHtml, run(csv, 'csv', 'html'));
+        fs.writeFileSync(outputs.prnHtml, run(prn, 'prn', 'html'));
 
         const htmlCsv = fs.readFileSync(outputs.csvHtml, 'utf-8').trim();
         const htmlPrn = fs.readFileSync(outputs.prnHtml, 'utf-8').trim();
@@ -34,8 +33,8 @@ describe('Evaluation-style E2E diff tests', () => {
     });
 
     it('produces identical JSON output from CSV and PRN', () => {
-        fs.writeFileSync(outputs.csvJson, execSync(`cat ${csv} | ${cliCommand} csv json`, {encoding: 'utf-8'}));
-        fs.writeFileSync(outputs.prnJson, execSync(`cat ${prn} | ${cliCommand} prn json`, {encoding: 'utf-8'}));
+        fs.writeFileSync(outputs.csvJson, run(csv, 'csv', 'json'));
+        fs.writeFileSync(outputs.prnJson, run(prn, 'prn', 'json'));
 
         const jsonCsv = fs.readFileSync(outputs.csvJson, 'utf-8').trim();
         const jsonPrn = fs.readFileSync(outputs.prnJson, 'utf-8').trim();

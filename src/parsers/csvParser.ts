@@ -7,7 +7,7 @@ export function parseCSV(input: Buffer | string): Types[] {
     const decoded = decodeToUtf8(input);
     if (!decoded.trim()) return []
 
-    const parsed = parse(input, {
+    const parsed = parse(decoded, {
         columns: true,
         skip_empty_lines: true,
         trim: true,

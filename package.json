@@ -1,15 +1,15 @@
 {
-  "name": "etl-coding-assignment",
+  "name": "dataparse-cli",
   "version": "1.0.0",
-  "description": "## The task",
-  "main": "index.ts",
+  "description": "CLI utility to convert CSV and PRN files to JSON or HTML",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "test": "jest"
+    "start": "ts-node src/index.ts",
+    "test": "jest --runInBand"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ana Ramos",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.14",
@@ -22,12 +22,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pavelsvitek/etl-coding-assignment.git"
+    "url": "git+https://github.com/anaoramos/dataparse-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/pavelsvitek/etl-coding-assignment/issues"
+    "url": "https://github.com/anaoramos/dataparse-cli/issues"
   },
-  "homepage": "https://github.com/pavelsvitek/etl-coding-assignment#readme",
+  "homepage": "https://github.com/anaoramos/dataparse-cli#readme",
   "dependencies": {
     "commander": "^14.0.0",
     "csv-parse": "^5.6.0",

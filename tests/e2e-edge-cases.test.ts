@@ -1,16 +1,6 @@
-import {execSync} from 'child_process';
 import path from 'path';
 import {Types} from '../src/types';
-import fs from 'fs';
-
-const run = (file: string, format: string, out: string) => {
-    const fileBuffer = fs.readFileSync(file);
-
-    return execSync(`npx ts-node src/index.ts ${format} ${out}`, {
-        input: fileBuffer,
-        encoding: 'utf-8',
-    });
-};
+import {run} from './utils/run';
 
 const fixtures = (name: string) => path.resolve(__dirname, 'fixtures', name);
 
