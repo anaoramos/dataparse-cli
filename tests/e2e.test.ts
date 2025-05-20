@@ -10,6 +10,12 @@ describe('Evaluation-style E2E diff tests', () => {
     const csv = path.join(fixturesDir, 'test.csv.txt');
     const prn = path.join(fixturesDir, 'test.prn.txt');
 
+    afterAll(() => {
+        Object.values(outputs).forEach(file => {
+            if (fs.existsSync(file)) fs.unlinkSync(file);
+        });
+    });
+
     const outputs = {
         csvHtml: path.join(fixturesDir, 'csv.html.txt'),
         prnHtml: path.join(fixturesDir, 'prn.html.txt'),

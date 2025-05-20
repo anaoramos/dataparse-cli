@@ -1,5 +1,7 @@
-import {Record} from '../types/Record';
 import {normalizeBirthday, normalizeCreditLimit} from "../utils/normalize";
+import iconv from "iconv-lite";
+import {Types} from "../types";
+import {detectEncoding} from "../utils/encoding";
 
 const FIELD_WIDTHS = {
     name: 16,
@@ -10,29 +12,42 @@ const FIELD_WIDTHS = {
     birthday: 8
 };
 
-export function parsePRN(input: string): Record[] {
-    const lines = input.trim().split('\n');
-    if (lines.length < 2) return [];
+export function parsePRN(input: Buffer | string): Types[] {
+    const buffer = Buffer.isBuffer(input) ? input : Buffer.from(input)
+    const encoding = detectEncoding(buffer);
+    const decoded = iconv.decode(buffer, encoding)
+    const lines = decoded.trim().split('\n')
 
-    lines.shift();
 
-    let pos = 0
-    const fields = {
-        name: [pos, pos += FIELD_WIDTHS.name],
-        address: [pos, pos += FIELD_WIDTHS.address],
-        postcode: [pos, pos += FIELD_WIDTHS.postcode],
-        phone: [pos, pos += FIELD_WIDTHS.phone],
-        creditLimit: [pos, pos += FIELD_WIDTHS.creditLimit],
-        birthday: [pos, pos + FIELD_WIDTHS.birthday]
+    if (lines.length < 2) return []
+
+    const dataLines = lines.slice(1)
+
+    return dataLines.map(line => {
+        const rawBuffer = iconv.encode(line, encoding);
+        const fields = sliceFields(rawBuffer, encoding);
+
+        return {
+            name: fields.name,
+            address: fields.address,
+            postcode: fields.postcode,
+            phone: fields.phone,
+            creditLimit: normalizeCreditLimit(fields.creditLimit, 100),
+            birthday: normalizeBirthday(fields.birthday),
+        };
+    });
+
+}
+
+function sliceFields(buffer: Buffer, encoding: string): Record<string, string> {
+    let offset = 0;
+    const result: Record<string, string> = {};
+
+    for (const [field, width] of Object.entries(FIELD_WIDTHS)) {
+        const segment = buffer.slice(offset, offset + width);
+        result[field] = iconv.decode(segment, encoding).trim();
+        offset += width;
     }
 
-
-    return lines.map(line => ({
-        name: line.slice(...fields.name).trim(),
-        address: line.slice(...fields.address).trim(),
-        postcode: line.slice(...fields.postcode).trim(),
-        phone: line.slice(...fields.phone).trim(),
-        creditLimit: normalizeCreditLimit(line.slice(...fields.creditLimit), 100),
-        birthday: normalizeBirthday(line.slice(...fields.birthday))
-    }))
+    return result;
 }

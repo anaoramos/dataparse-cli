@@ -1,7 +1,7 @@
-import { Record } from '../types/Record';
+import { Types } from '../types';
 
 
-export function renderJSON(data: Record[]): string {
+export function renderJSON(data: Types[]): string {
     if (!Array.isArray(data)) {
         throw new TypeError('Input to renderJSON must be an array of records');
     }

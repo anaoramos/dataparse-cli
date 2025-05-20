@@ -1,4 +1,6 @@
 export function normalizeCreditLimit(raw: string, scale = 1): string {
+    if (!raw) return '';
+
     const n = parseFloat(raw.replace(/[^\d.]/g, ''))
     return isNaN(n) ? '' : (n / scale).toFixed(2)
 }

@@ -1,6 +1,6 @@
-import { Record } from '../types/Record';
+import { Types } from '../types';
 
-export function renderHTML(data: Record[]): string {
+export function renderHTML(data: Types[]): string {
     if (data.length === 0) {
         return `
       <html>
@@ -19,7 +19,7 @@ export function renderHTML(data: Record[]): string {
 
     const headerRow = headers.map(h => `<th>${h}</th>`).join('');
     const bodyRows = data.map(row =>
-        `<tr>${headers.map(h => `<td>${row[h as keyof Record]}</td>`).join('')}</tr>`
+        `<tr>${headers.map(h => `<td>${row[h as keyof Types]}</td>`).join('')}</tr>`
     ).join('\n');
 
     return `
