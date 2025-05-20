@@ -1,8 +1,8 @@
-import { Types } from '../types';
+import { Types } from "../types";
 
 export function renderHTML(data: Types[]): string {
-    if (data.length === 0) {
-        return `
+  if (data.length === 0) {
+    return `
       <html>
         <head><meta charset="UTF-8"><title>Data Output</title></head>
         <body>
@@ -13,16 +13,19 @@ export function renderHTML(data: Types[]): string {
         </body>
       </html>
     `.trim();
-    }
+  }
 
-    const headers = Object.keys(data[0]);
+  const headers = Object.keys(data[0]);
 
-    const headerRow = headers.map(h => `<th>${h}</th>`).join('');
-    const bodyRows = data.map(row =>
-        `<tr>${headers.map(h => `<td>${row[h as keyof Types]}</td>`).join('')}</tr>`
-    ).join('\n');
+  const headerRow = headers.map((h) => `<th>${h}</th>`).join("");
+  const bodyRows = data
+    .map(
+      (row) =>
+        `<tr>${headers.map((h) => `<td>${row[h as keyof Types]}</td>`).join("")}</tr>`,
+    )
+    .join("\n");
 
-    return `
+  return `
     <html>
       <head><meta charset="UTF-8"><title>Data Output</title></head>
       <body>
